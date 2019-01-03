@@ -1,0 +1,71 @@
+
+Log Entry : 1:30:22 AM Sunday, November 12, 2017
+  :
+  :qwe
+-------------------------------
+
+Log Entry : 01:30:46 12 listopada 2017
+  :
+  :qwe
+-------------------------------
+
+Log Entry : 1:31:08 AM Sunday, November 12, 2017
+  :
+  :qwe
+-------------------------------
+
+Log Entry : 01:31:13 12 listopada 2017
+  :
+  :qwe
+-------------------------------
+
+Log Entry : 1:31:14 AM Sunday, November 12, 2017
+  :
+  :qwe
+-------------------------------
+
+Log Entry : 1:36:15 AM Sunday, November 12, 2017
+Exception message: qwe
+-------------------------------
+
+Log Entry : 1:36:58 AM Sunday, November 12, 2017
+Exception message: qwe
+-------------------------------
+
+Log Entry : 1:37:03 AM Sunday, November 12, 2017
+Exception message: qwe
+-------------------------------
+
+Log Entry : 1:37:07 AM Sunday, November 12, 2017
+Exception message: qwe
+-------------------------------
+
+Log Entry : 01:37:23 12 listopada 2017
+Exception message: qwe
+-------------------------------
+
+Log Entry : 01:37:35 12 listopada 2017
+Exception message: qwe
+-------------------------------
+
+Log Entry : 01:39:22 12 listopada 2017
+Exception message: System.InvalidOperationException: The model backing the 'FlagCheckerContext' context has changed since the database was created. Consider using Code First Migrations to update the database (http://go.microsoft.com/fwlink/?LinkId=238269).
+   at System.Data.Entity.CreateDatabaseIfNotExists`1.InitializeDatabase(TContext context)
+   at System.Data.Entity.Internal.InternalContext.<>c__DisplayClassf`1.<CreateInitializationAction>b__e()
+   at System.Data.Entity.Internal.InternalContext.PerformInitializationAction(Action action)
+   at System.Data.Entity.Internal.InternalContext.PerformDatabaseInitialization()
+   at System.Data.Entity.Internal.LazyInternalContext.<InitializeDatabase>b__4(InternalContext c)
+   at System.Data.Entity.Internal.RetryAction`1.PerformAction(TInput input)
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeDatabaseAction(Action`1 action)
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeDatabase()
+   at System.Data.Entity.Internal.InternalContext.Initialize()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.GetEnumerator()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Collections.Generic.IEnumerable<TResult>.GetEnumerator()
+   at System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   at System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   at FlagChecker.Data.Repositories.CountryRepository.GetAllCountries() in C:\Users\A233005\Desktop\all\FlagChecker\FlagChecker.Data\Repositories\CountryRepository.cs:line 16
+   at FlagChecker.Services.CountryService.GetAllCountries() in C:\Users\A233005\Desktop\all\FlagChecker\FlagChecker.Services\CountryService.cs:line 24
+   at FlagChecker.Tests.FlagTests.ShouldReturnAllCountries() in C:\Users\A233005\Desktop\all\FlagChecker\FlagChecker.Tests\FlagTests.cs:line 20
+-------------------------------

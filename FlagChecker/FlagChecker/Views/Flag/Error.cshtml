@@ -1,0 +1,37 @@
+﻿@using System.Web.Optimization
+@using FlagChecker.Models
+@model FlagChecker.Models.ErrorViewModel.Type?
+
+@Styles.Render("~/Content/css")
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Woops! We're having issues!</title>
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+    <div class="col-md-4 mx-auto" style="margin-top: 100px;">
+        <div class="card border-danger">
+            <div class="card-body">
+                <blockquote class="card-blockquote">
+                    <h4 class="text-danger">Woops! We're having issues.</h4>
+                    @if (Model == ErrorViewModel.Type.Default)
+                    {
+                        <p class="text-muted" style="display:inline;">Something went wrong and we couldn't process this action. Maybe you'd like to...</p><a href="@Url.Action("Index", "Flag")" class="text-danger small"> try again</a>
+                    }
+                    @if (Model == ErrorViewModel.Type.Link)
+                    {
+                        <p class="text-muted" style="display:inline;">Your link is invalid. Try again with a working one, or just...</p><a href="@Url.Action("Index", "Flag")" class="text-danger small"> try again</a>
+                    }
+                </blockquote>
+            </div>
+        </div>
+    </div>
+</div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,204 @@
+﻿@using System.Globalization
+@using System.Web.Optimization
+
+@{
+                /**/
+    @model FlagChecker.Models.CountryViewModel
+                /**/
+
+                ViewData["Title"] = "Flag Checker / " + Model.CountriesCount + " " + @Resources.Res.Title_CountriesVisited;
+                Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Scripts.Render("~/bundles/Scripts")
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jvectormap")
+@Styles.Render("~/Content/css")
+
+<div style="margin-top: 20px;">
+    <h2>
+        <a href="@Url.Action("Index", "Flag")">Flag checker</a> //@Resources.Res.Main_Summary
+    </h2>
+</div>
+
+<div class="rounded subcard-1">
+    <div class="subcard-2">
+        <div data-ng-app='CountApp' data-ng-controller='CountCtrl'>
+
+            <div id="world-map" style="height: 300px"></div>
+            <script>
+                var countries = {};
+
+                $(function () {
+
+                    $('#world-map').vectorMap({
+                        map: 'world_mill',
+                        series: {
+                            regions: [
+                                {
+                                    values: countries
+                                }
+                            ]
+                        }
+                    });
+                });
+            </script>
+
+            <div class="row text-center">
+                <div class="col-3">
+                    <h4 class="text-success">@Model.CountriesCount</h4>
+                    <p class="text-muted">@Resources.Res.Stats_Countries</p>
+                </div>
+                <div class="col-3">
+                    <h4 class="text-success">@Model.CountriesPercent %</h4>
+                    <p class="text-muted">@Resources.Res.Stats_AllCountries</p>
+                </div>
+                <div class="col-3">
+                    <h4 class="text-success">@Model.CountriesArea</h4>
+                    <p class="text-muted">@Resources.Res.Stats_Km2</p>
+                </div>
+                <div class="col-3">
+                    <h4 class="text-success">@Model.CountriesAreaPercent %</h4>
+                    <p class="text-muted">@Resources.Res.Stats_Area</p>
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col-2">
+                    <h5 class="text-success">@Model.EuropeanCountriesCount</h5>
+                    <p class="text-muted">@Resources.Res.Stats_Europe</p>
+                </div>
+                <div class="col-2">
+                    <h5 class="text-success">@Model.AsianCountriesCount</h5>
+                    <p class="text-muted">@Resources.Res.Stats_Asia</p>
+                </div>
+                <div class="col-2">
+                    <h5 class="text-success">@Model.AfricanCountriesCount</h5>
+                    <p class="text-muted">@Resources.Res.Stats_Africa</p>
+                </div>
+                <div class="col-2">
+                    <h5 class="text-success">@Model.NAmericanCountriesCount</h5>
+                    <p class="text-muted">@Resources.Res.Stats_NAmerica</p>
+                </div>
+                <div class="col-2">
+                    <h5 class="text-success">@Model.SAmericanCountriesCount</h5>
+                    <p class="text-muted">@Resources.Res.Stats_SAmerica</p>
+                </div>
+                <div class="col-2">
+                    <h5 class="text-success">@Model.AustralianCountriesCount</h5>
+                    <p class="text-muted">@Resources.Res.Stats_Australia</p>
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="text-center" style="margin-bottom: 10px;">
+                <span class="badge badge-secondary continents" ng-click="show('flags')"><span class="fa fa-flag" aria-hidden="true"></span> @Resources.Res.Additional_Flags</span>
+                <span class="badge badge-secondary continents" ng-click="show('details')"><span class="fa fa-table" aria-hidden="true"></span> @Resources.Res.Additional_Details</span>
+                <span class="badge badge-secondary continents" ng-click="show('share')"><span class="fa fa-share" aria-hidden="true"></span> @Resources.Res.Additional_Share</span>
+            </div>
+
+            <div class="row text-center equal" ng-show="flags">
+
+                @try
+                {
+                    for (int i = 0; i < Model.Countries.Count(); i++)
+                    {
+                        <div class="col-md-2 col-sm-3 col-xs-4">
+                            <img src="~/Utilities/Flags/@Model.Countries[i].Source"><br />
+                            @if (CultureInfo.CurrentCulture.Name == "en-US")
+                            {
+                                <p class="text-muted">@Model.Countries[i].NameEn</p>
+                            }
+                            @if (CultureInfo.CurrentCulture.Name == "pl-PL")
+                            {
+                                <p class="text-muted">@Model.Countries[i].NamePl</p>
+                            }
+                            <script>
+                                                countries.@Model.Countries[i].Code = '#00bc8c';
+                            </script>
+                        </div>
+                    }
+                }
+                catch
+                {
+                    <span>error</span>
+                }
+
+            </div>
+
+            <div ng-show="details">
+
+                <table class="table table-hover" style="font-size: 12px;">
+                    <thead>
+                        <tr>
+                            <th class="text-success">#</th>
+                            <th class="text-success">@Resources.Res.Stats_TextName</th>
+                            <th class="text-success">@Resources.Res.Stats_TextContinent</th>
+                            <th class="text-success">@Resources.Res.Stats_TextCode</th>
+                            <th class="text-success">@Resources.Res.Stats_TextArea [km²]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @for (int i = 0; i < @Model.Countries.Count; i++)
+                        {
+                            <tr>
+                                <td class="text-muted">@i</td>
+                                @if (CultureInfo.CurrentCulture.Name == "en-US")
+                                {
+                                    <td class="text-muted"><img src="~/Utilities/Flags/@Model.Countries[i].Source" style="width: 17px"> @Model.Countries[i].NameEn</td>
+                                }
+                                @if (CultureInfo.CurrentCulture.Name == "pl-PL")
+                                {
+                                    <td class="text-muted"><img src="~/Utilities/Flags/@Model.Countries[i].Source" style="width: 17px"> @Model.Countries[i].NamePl</td>
+                                }
+                                <td class="text-muted">@Model.Countries[i].Continent</td>
+                                <td class="text-muted">@Model.Countries[i].Code</td>
+                                <td class="text-muted">@Model.Countries[i].Area</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+
+            <div ng-show="share">
+                <div class="form-group text-success">
+                    <label class="control-label" for="inputSuccess">@Resources.Res.Stats_ShareLink</label>
+                    <input type="text" class="form-control share-link" id="inputSuccess" value="@HttpContext.Current.Request.Url.AbsoluteUri@Model.ShareLink" style="background-color: #222222; color: #989899;" disabled>
+                </div>
+
+                <div class="text-success">
+                    <label class="control-label">@Resources.Res.Stats_GenerateImages</label>
+                    <p class="text-muted"><a href="#">@Resources.Res.Stats_OpenGenerator</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var app = angular.module('CountApp', []);
+
+    app.controller('CountCtrl',
+        function ($scope) {
+            $scope.show = function (tab) {
+                $scope.flags = false;
+                $scope.details = false;
+                $scope.statistics = false;
+                $scope.share = false;
+
+                if (tab === 'flags') {
+                    $scope.flags = true;
+                }
+                if (tab === 'details') {
+                    $scope.details = true;
+                }
+                if (tab === 'share') {
+                    $scope.share = true;
+                }
+            }
+        });
+
+</script>

@@ -1,0 +1,114 @@
+﻿@using System.Web.Optimization;
+@using System.Globalization;
+
+@{
+    ViewData["Title"] = "Flag Checker";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    @model List<FlagChecker.Data.Models.Country>
+}
+
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/Scripts")
+@Scripts.Render("~/bundles/jquery")
+
+<div style="margin-top: 20px;">
+    <h2>Flag checker</h2>
+</div>
+
+<div class="text-right text-muted small">
+    <a href="#" data-toggle="modal">faq</a> - @Resources.Res.Main_Language: <a href="@Url.Action("SwitchLanguage", "Lang")">@Resources.Res.Main_CurrentLanguage <span class="fa fa-exchange" aria-hidden="true"></span> </a>
+</div>
+
+<div class="rounded subcard-1">
+    <div data-ng-app='CountApp' data-ng-controller='CountCtrl'>
+        <div class="demo5" id="demo5" style="height: 500px">
+            <div class="simplebar-scroll-content">
+                <div class="simplebar-content">
+                    <div class="text-center equal subcard-2 ">
+                        @for (int i = 0; i < Model.Count; i++)
+                        {
+                            <div class="col-3">
+                                <img src="~/Utilities/Flags/@Model[i].Source" id="@Model[i].Id" class="unselected" ng-click='checkFlag(@Model[i].Id,"@Model[i].Source");changeClass(@Model[i].Id);'><br />
+                                @if (CultureInfo.CurrentCulture.Name == "pl-PL")
+                                {
+                                    <p class="text-muted">@Model[i].NamePl</p>
+                                }
+                                @if (CultureInfo.CurrentCulture.Name == "en-US")
+                                {
+                                    <p class="text-muted">@Model[i].NameEn</p>
+                                }
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row subcard-2">
+            <div class="col-12 text-muted small">
+                <div class="progress">
+                    <div class="progress-bar bg-success" role="progressbar" ng-style="{'width' : (checkedFlagsCount/1.97) +'%'}"></div>
+                </div>
+            </div>
+
+            <div class="col-12 text-muted small" style="margin-bottom: 5px;">
+                {{checkedFlagsCount}} / 195 @Resources.Res.Main_Countries | @Resources.Res.Main_Countries: <span ng-repeat="source in countriesCheckedNames"><img src="~/Utilities/Flags/{{source}}" style="height: 17px; cursor: pointer;" ng-click='checkFlag(countriesChecked[$index],source);changeClass(countriesChecked[$index]);' /> </span>
+                <span class="pull-right float-right media-right text-right">
+                    <a href="#" onclick="SendF()">@Resources.Res.Main_SumUp!</a>
+                </span>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    var flags;
+    var demo5 = new SimpleBar(document.getElementById('demo5'));
+    var app = angular.module('CountApp', []);
+
+    function SendF() {
+        $(function() {
+            var targetUrl = "@Url.Action("Summary", "Flag")";
+            var $f = $("<form></form>").attr("action",targetUrl).attr("method","post");
+
+            $.each(flags, function(a, b) {
+                var $el = $("<input type='hidden' name='countriesChecked' />").attr("value",b);
+                $f.append($el);
+            });
+
+            $f.appendTo("body").submit();
+        });
+    }
+
+
+    app.controller('CountCtrl',
+        function($scope) {
+            $scope.checkedFlagsCount = 0;
+            $scope.flagsArray = [];
+            $scope.countriesChecked = [];
+            $scope.countriesCheckedNames = [];
+
+            $scope.checkFlag = function(flagId, flagSource) {
+                var checkedFlag = document.getElementById(flagId);
+
+                if ($scope.countriesChecked.indexOf(flagId) === -1) {
+                    $scope.countriesChecked.push(flagId);
+                    $scope.checkedFlagsCount = $scope.countriesChecked.length;
+                    checkedFlag.className = "selected";
+                } else {
+                    $scope.countriesChecked.splice($scope.countriesChecked.indexOf(flagId), 1);
+                    $scope.checkedFlagsCount = $scope.countriesChecked.length;
+                    checkedFlag.className = "unselected";
+                }
+
+                if ($scope.countriesCheckedNames.indexOf(flagSource) === -1) {
+                    $scope.countriesCheckedNames.push(flagSource);
+                } else {
+                    $scope.countriesCheckedNames.splice($scope.countriesCheckedNames.indexOf(flagSource), 1);
+                }
+                flags = $scope.countriesChecked;
+            }
+        });
+</script>
