@@ -5,7 +5,7 @@ It was basically a training of using dependency injection, unit tests, mocking, 
 I wanted to know how many countries I have visited since travelling is also my second hobby (:
 
 # Technologies & Libs used
-ASP.NET MVC, Entity Framework, Moq, Autofixture, AngularJS, JQuery, JQuery JVectormap
+ASP.NET MVC, Entity Framework, Unity, Moq, Autofixture, AngularJS, JQuery, JQuery JVectormap
 
 # Screenshots
 Selection screen:
