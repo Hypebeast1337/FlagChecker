@@ -22,7 +22,7 @@ Summary screen with details:
 maybe some day
 
 # Bugs
--Not responsive at all (and no time to fix it now). <br/>
+-Not responsive at all <br/>
 -Image generating doesn't work<br/>
--Probably other stuff that I didn't care about
+-Probably other stuff that I didn't care about (:<br/>
 Maybe some day I'll get back to it
